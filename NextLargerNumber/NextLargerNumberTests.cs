@@ -29,6 +29,16 @@ namespace NextLargerNumber
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void Test_32_should_return_minus_1()
+        {
+            var input = 32;
+            var expected = -1;
+
+            var actual = NextLargerNumber.Next(input);
+            Assert.AreEqual(expected, actual);
+        }
     }
 
     public static class NextLargerNumber
@@ -42,6 +52,11 @@ namespace NextLargerNumber
             }
 
             int result = GetNumbersFromChars(numbers);
+            if (result == input)
+            {
+                return -1;
+            }
+
             return result;
         }
 

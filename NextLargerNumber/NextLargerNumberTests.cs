@@ -46,21 +46,25 @@ namespace NextLargerNumber
         internal static int Next(int input)
         {
             var numbers = input.ToString().ToCharArray().OrderByDescending(x => x).Select(x => (int)Char.GetNumericValue(x)).ToList();
-            if (numbers.Count() == 1)
+            if (CheckIfOnlyOneNumber(numbers) || CheckIfAlreadyLargestNumber(input, numbers))
             {
                 return -1;
             }
 
-            int result = GetNumbersFromChars(numbers);
-            if (result == input)
-            {
-                return -1;
-            }
-
-            return result;
+            return GetNumberFromChars(numbers);
         }
 
-        private static int GetNumbersFromChars(List<int> numbers)
+        private static bool CheckIfAlreadyLargestNumber(int input, List<int> numbers)
+        {
+            return GetNumberFromChars(numbers) == input;
+        }
+
+        private static bool CheckIfOnlyOneNumber(List<int> numbers)
+        {
+            return numbers.Count == 1;
+        }
+
+        private static int GetNumberFromChars(List<int> numbers)
         {
             var count = numbers.Count;
 

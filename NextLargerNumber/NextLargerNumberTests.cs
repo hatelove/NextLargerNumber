@@ -39,6 +39,15 @@ namespace NextLargerNumber
             var actual = NextLargerNumber.Next(input);
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void Test_666_should_return_minus_1()
+        {
+            var input = 666;
+            var expected = -1;
+            var actual = NextLargerNumber.Next(input);
+            Assert.AreEqual(expected, actual);
+        }
     }
 
     public static class NextLargerNumber
@@ -61,7 +70,7 @@ namespace NextLargerNumber
 
         private static bool CheckIfOnlyOneNumber(List<int> numbers)
         {
-            return numbers.Count == 1;
+            return numbers.Distinct().Count() == 1;
         }
 
         private static int GetNumberFromChars(List<int> numbers)

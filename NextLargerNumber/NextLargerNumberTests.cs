@@ -1,5 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NextLargerNumber
 {
@@ -16,7 +18,16 @@ namespace NextLargerNumber
             int actual = NextLargerNumber.Next(input);
 
             Assert.AreEqual(expected, actual);
+        }
 
+        [TestMethod]
+        public void Test_23_should_return_32()
+        {
+            var input = 23;
+            var expected = 32;
+            var actual = NextLargerNumber.Next(input);
+
+            Assert.AreEqual(expected, actual);
         }
     }
 
@@ -24,7 +35,22 @@ namespace NextLargerNumber
     {
         internal static int Next(int input)
         {
-            throw new NotImplementedException();
+            var numbers = input.ToString().ToCharArray().OrderByDescending(x => x).Select(x => (int)Char.GetNumericValue(x)).ToList();
+            if (numbers.Count() == 1)
+            {
+                return -1;
+            }
+
+            int result = GetNumbersFromChars(numbers);
+            return result;
+        }
+
+        private static int GetNumbersFromChars(List<int> numbers)
+        {
+            var count = numbers.Count;
+
+            var result = numbers.Select((x, index) => { return x * (Math.Pow(10, (count - index - 1))); }).Sum();
+            return Convert.ToInt32(result);
         }
     }
 }

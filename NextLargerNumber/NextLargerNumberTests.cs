@@ -78,6 +78,16 @@ namespace NextLargerNumber
             var actual = NextLargerNumber.Next(input);
             Assert.AreEqual(expected, actual);
         }
+
+        [Ignore]
+        [TestMethod]
+        public void Test_2543_should_return_3245()
+        {
+            var input = 2543;
+            var expected = 3245;
+            var actual = NextLargerNumber.Next(input);
+            Assert.AreEqual(expected, actual);
+        }
     }
 
     public static class NextLargerNumber
@@ -104,21 +114,23 @@ namespace NextLargerNumber
                 var rightIndex = numbers.Count - 1;
                 var leftIndex = rightIndex - 1;
 
-                SwapWhenRightLargerThanLeftElement(ref numbers, rightIndex, leftIndex);
+                SwapWhenRightLargerThanLeftElement(numbers, rightIndex, leftIndex);
 
-                result = GetNumbericFromValueList(numbers);
+                result = GetNumbericFromValueList(resultList);
             }
 
             return result;
         }
 
-        private static void SwapWhenRightLargerThanLeftElement(ref List<int> numbers, int rightIndex, int leftIndex)
+        private static void SwapWhenRightLargerThanLeftElement(List<int> numbers, int rightIndex, int leftIndex)
         {
             if (numbers[rightIndex] > numbers[leftIndex])
             {
                 var temp = numbers[rightIndex];
                 numbers[rightIndex] = numbers[leftIndex];
                 numbers[leftIndex] = temp;
+
+                resultList = numbers;                
             }
             else
             {
@@ -127,21 +139,17 @@ namespace NextLargerNumber
                 var newRightIndex = leftIndex;
                 var newLeftIndex = leftIndex - 1;
 
-                var newLeftValue = numbers[newLeftIndex];
-                var newRightValue = numbers[newRightIndex];
-                if (newRightValue > newLeftValue)
+                if (numbers[newRightIndex] > numbers[newLeftIndex])
                 {
-                    rightList.Add(newRightValue);
+                    rightList.Add(numbers[newRightIndex]);
 
-                    var valueForSwapFromRight = rightList.Where(x => x > newLeftValue).Min();
-                    //var rightIndexForSwap = numbers.FindIndex(x => x == valueForSwapFromRight);
+                    var valueForSwapFromRight = rightList.Where(x => x > numbers[newLeftIndex]).Min();                    
 
                     rightList.Remove(valueForSwapFromRight);
-                    rightList.Add(newLeftValue);
+                    rightList.Add(numbers[newLeftIndex]);
 
                     resultList.Add(valueForSwapFromRight);
-                    resultList.AddRange(rightList.OrderBy(x => x).ToList());
-                    numbers = new List<int>(resultList);
+                    resultList.AddRange(rightList.OrderBy(x => x).ToList());                    
                 }
             }
         }

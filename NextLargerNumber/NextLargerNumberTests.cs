@@ -48,32 +48,53 @@ namespace NextLargerNumber
             var actual = NextLargerNumber.Next(input);
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void Test_517_should_return_571()
+        {
+            var input = 517;
+            var expected = 571;
+
+            var actual = NextLargerNumber.Next(input);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Ignore]
+        [TestMethod]
+        public void Test_132_should_return_231()
+        {
+        }
     }
 
     public static class NextLargerNumber
     {
         internal static int Next(int input)
         {
-            var numbers = input.ToString().ToCharArray().OrderByDescending(x => x).Select(x => (int)Char.GetNumericValue(x)).ToList();
-            if (CheckIfOnlyOneNumber(numbers) || CheckIfAlreadyLargestNumber(input, numbers))
+            var numbers = input.ToString().ToCharArray().ToList();
+
+            var largestNumbers = numbers.OrderByDescending(x => x)
+                .Select(x => (int)char.GetNumericValue(x)).ToList();
+
+            var largetNumber = GetNumbericFromValueList(largestNumbers);
+            if (CheckIfOnlyOneNumber(numbers) || CheckIfAlreadyLargestNumber(input, largetNumber))
             {
                 return -1;
             }
 
-            return GetNumberFromChars(numbers);
+            return largetNumber;
         }
 
-        private static bool CheckIfAlreadyLargestNumber(int input, List<int> numbers)
+        private static bool CheckIfAlreadyLargestNumber(int input, int number)
         {
-            return GetNumberFromChars(numbers) == input;
+            return number == input;
         }
 
-        private static bool CheckIfOnlyOneNumber(List<int> numbers)
+        private static bool CheckIfOnlyOneNumber(List<char> numbers)
         {
             return numbers.Distinct().Count() == 1;
         }
 
-        private static int GetNumberFromChars(List<int> numbers)
+        private static int GetNumbericFromValueList(List<int> numbers)
         {
             var count = numbers.Count;
 

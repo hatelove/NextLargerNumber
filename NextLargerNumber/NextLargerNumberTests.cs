@@ -15,7 +15,7 @@ namespace NextLargerNumber
 
             var expected = -1;
 
-            int actual = NextLargerNumber.Next(input);
+            int actual = CreateNextLargerNumber().Next(input);
 
             Assert.AreEqual(expected, actual);
         }
@@ -25,7 +25,7 @@ namespace NextLargerNumber
         {
             var input = 23;
             var expected = 32;
-            var actual = NextLargerNumber.Next(input);
+            var actual = CreateNextLargerNumber().Next(input);
 
             Assert.AreEqual(expected, actual);
         }
@@ -36,7 +36,7 @@ namespace NextLargerNumber
             var input = 32;
             var expected = -1;
 
-            var actual = NextLargerNumber.Next(input);
+            var actual = CreateNextLargerNumber().Next(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -45,7 +45,7 @@ namespace NextLargerNumber
         {
             var input = 666;
             var expected = -1;
-            var actual = NextLargerNumber.Next(input);
+            var actual = CreateNextLargerNumber().Next(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -55,7 +55,7 @@ namespace NextLargerNumber
             var input = 517;
             var expected = 571;
 
-            var actual = NextLargerNumber.Next(input);
+            var actual = CreateNextLargerNumber().Next(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -65,7 +65,7 @@ namespace NextLargerNumber
             var input = 132;
             var expected = 213;
 
-            var actual = NextLargerNumber.Next(input);
+            var actual = CreateNextLargerNumber().Next(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -75,7 +75,7 @@ namespace NextLargerNumber
             var input = 231;
             var expected = 312;
 
-            var actual = NextLargerNumber.Next(input);
+            var actual = CreateNextLargerNumber().Next(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -85,7 +85,7 @@ namespace NextLargerNumber
             var input = 10231;
             var expected = 10312;
 
-            var actual = NextLargerNumber.Next(input);
+            var actual = CreateNextLargerNumber().Next(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -94,18 +94,20 @@ namespace NextLargerNumber
         {
             var input = 2543;
             var expected = 3245;
-            var actual = NextLargerNumber.Next(input);
+            var actual = CreateNextLargerNumber().Next(input);
             Assert.AreEqual(expected, actual);
+        }
+
+        private static NextLargerNumber CreateNextLargerNumber()
+        {
+            return new NextLargerNumber();
         }
     }
 
-    public static class NextLargerNumber
+    public class NextLargerNumber
     {
-        internal static int Next(int input)
+        internal int Next(int input)
         {
-            resultList.Clear();
-            rightList.Clear();
-
             var numbers = input.ToString().ToCharArray().Select(x => (int)char.GetNumericValue(x)).ToList();
 
             var rightIndex = numbers.Count - 1;
@@ -116,7 +118,7 @@ namespace NextLargerNumber
             return result == input ? -1 : result;
         }
 
-        private static void SwapWhenRightLargerThanLeftElement(List<int> numbers, int rightIndex, int leftIndex)
+        private void SwapWhenRightLargerThanLeftElement(List<int> numbers, int rightIndex, int leftIndex)
         {
             rightList.Add(numbers[rightIndex]);
 
@@ -144,8 +146,8 @@ namespace NextLargerNumber
             SwapWhenRightLargerThanLeftElement(numbers, leftIndex, leftIndex - 1);
         }
 
-        private static List<int> rightList = new List<int>();
-        private static List<int> resultList = new List<int>();
+        private List<int> rightList = new List<int>();
+        private List<int> resultList = new List<int>();
 
         private static bool CheckIfAlreadyLargestNumber(int input, int number)
         {

@@ -89,7 +89,6 @@ namespace NextLargerNumber
             Assert.AreEqual(expected, actual);
         }
 
-        [Ignore]
         [TestMethod]
         public void Test_2543_should_return_3245()
         {
@@ -134,35 +133,23 @@ namespace NextLargerNumber
 
         private static void SwapWhenRightLargerThanLeftElement(List<int> numbers, int rightIndex, int leftIndex)
         {
+            rightList.Add(numbers[rightIndex]);
+
             if (numbers[rightIndex] > numbers[leftIndex])
             {
-                var temp = numbers[rightIndex];
-                numbers[rightIndex] = numbers[leftIndex];
-                numbers[leftIndex] = temp;
+                resultList.AddRange(numbers.GetRange(0, leftIndex));
 
-                resultList = numbers;
+                var valueForSwapFromRight = rightList.Where(x => x > numbers[leftIndex]).Min();
+
+                rightList.Remove(valueForSwapFromRight);
+                rightList.Add(numbers[leftIndex]);
+
+                resultList.Add(valueForSwapFromRight);
+                resultList.AddRange(rightList.OrderBy(x => x).ToList());
             }
             else
             {
-                rightList.Add(numbers[rightIndex]);
-
-                var newRightIndex = leftIndex;
-                var newLeftIndex = leftIndex - 1;
-
-                if (numbers[newRightIndex] > numbers[newLeftIndex])
-                {
-                    var leftList = numbers.GetRange(0, newLeftIndex);
-                    resultList.AddRange(leftList);
-                    rightList.Add(numbers[newRightIndex]);
-
-                    var valueForSwapFromRight = rightList.Where(x => x > numbers[newLeftIndex]).Min();
-
-                    rightList.Remove(valueForSwapFromRight);
-                    rightList.Add(numbers[newLeftIndex]);
-
-                    resultList.Add(valueForSwapFromRight);
-                    resultList.AddRange(rightList.OrderBy(x => x).ToList());
-                }
+                SwapWhenRightLargerThanLeftElement(numbers, leftIndex, leftIndex - 1);
             }
         }
 

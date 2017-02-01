@@ -98,6 +98,32 @@ namespace NextLargerNumber
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod]
+        public void Test_54321_should_return_minus_1()
+        {
+            var input = 54321;
+            var expected = -1;
+            var actual = CreateNextLargerNumber().Next(input);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Test_12321_should_return_13122()
+        {
+            var input = 12321;
+            var expected = 13122;
+            var actual = CreateNextLargerNumber().Next(input);
+            Assert.AreEqual(expected, actual);            
+        }
+
+        [TestMethod]
+        public void Test_11200_should_return_12001()
+        {
+            var input = 11200;
+            var expected = 12001;
+            var actual = CreateNextLargerNumber().Next(input);
+            Assert.AreEqual(expected, actual);
+        }
         private static NextLargerNumber CreateNextLargerNumber()
         {
             return new NextLargerNumber();

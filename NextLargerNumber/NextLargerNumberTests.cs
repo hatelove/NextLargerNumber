@@ -63,6 +63,11 @@ namespace NextLargerNumber
         [TestMethod]
         public void Test_132_should_return_231()
         {
+            var input = 132;
+            var expected = 231;
+
+            var actual = NextLargerNumber.Next(input);
+            Assert.AreEqual(expected, actual);
         }
     }
 
@@ -72,21 +77,26 @@ namespace NextLargerNumber
         {
             var numbers = input.ToString().ToCharArray().ToList();
 
+            //for more easily refactoring
+            int result = 0;
+
             var largestNumbers = numbers.OrderByDescending(x => x)
-                .Select(x => (int) char.GetNumericValue(x));
+                .Select(x => (int)char.GetNumericValue(x));
 
             var largetNumber = GetNumbericFromValueList(largestNumbers);
             if (CheckIfOnlyOneNumber(numbers) || CheckIfAlreadyLargestNumber(input, largetNumber))
             {
-                return -1;
+                result = -1;
             }
+            else
+            {
+                var rightIndex = numbers.Count - 1;
+                var leftIndex = rightIndex - 1;
 
-            var rightIndex = numbers.Count - 1;
-            var leftIndex = rightIndex - 1;
-                        
-            SwapWhenRightLargerThanLeftElement(numbers, rightIndex, leftIndex);
+                SwapWhenRightLargerThanLeftElement(numbers, rightIndex, leftIndex);
 
-            var result = GetNumbericFromValueList(numbers.Select(x => (int)char.GetNumericValue(x)));
+                result = GetNumbericFromValueList(numbers.Select(x => (int)char.GetNumericValue(x)));
+            }
 
             return result;
         }

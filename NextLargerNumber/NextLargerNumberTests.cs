@@ -59,12 +59,21 @@ namespace NextLargerNumber
             Assert.AreEqual(expected, actual);
         }
 
-        [Ignore]
         [TestMethod]
-        public void Test_132_should_return_231()
+        public void Test_132_should_return_213()
         {
             var input = 132;
-            var expected = 231;
+            var expected = 213;
+
+            var actual = NextLargerNumber.Next(input);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Test_231_should_return_312()
+        {
+            var input = 231;
+            var expected = 312;
 
             var actual = NextLargerNumber.Next(input);
             Assert.AreEqual(expected, actual);
@@ -75,13 +84,15 @@ namespace NextLargerNumber
     {
         internal static int Next(int input)
         {
-            var numbers = input.ToString().ToCharArray().ToList();
+            resultList.Clear();
+            rightList.Clear();
+
+            var numbers = input.ToString().ToCharArray().Select(x => (int)char.GetNumericValue(x)).ToList();
 
             //for more easily refactoring
             int result = 0;
 
-            var largestNumbers = numbers.OrderByDescending(x => x)
-                .Select(x => (int)char.GetNumericValue(x));
+            var largestNumbers = numbers.OrderByDescending(x => x);
 
             var largetNumber = GetNumbericFromValueList(largestNumbers);
             if (CheckIfOnlyOneNumber(numbers) || CheckIfAlreadyLargestNumber(input, largetNumber))
@@ -93,15 +104,15 @@ namespace NextLargerNumber
                 var rightIndex = numbers.Count - 1;
                 var leftIndex = rightIndex - 1;
 
-                SwapWhenRightLargerThanLeftElement(numbers, rightIndex, leftIndex);
+                SwapWhenRightLargerThanLeftElement(ref numbers, rightIndex, leftIndex);
 
-                result = GetNumbericFromValueList(numbers.Select(x => (int)char.GetNumericValue(x)));
+                result = GetNumbericFromValueList(numbers);
             }
 
             return result;
         }
 
-        private static void SwapWhenRightLargerThanLeftElement(List<char> numbers, int rightIndex, int leftIndex)
+        private static void SwapWhenRightLargerThanLeftElement(ref List<int> numbers, int rightIndex, int leftIndex)
         {
             if (numbers[rightIndex] > numbers[leftIndex])
             {
@@ -109,14 +120,41 @@ namespace NextLargerNumber
                 numbers[rightIndex] = numbers[leftIndex];
                 numbers[leftIndex] = temp;
             }
+            else
+            {
+                rightList.Add(numbers[rightIndex]);
+
+                var newRightIndex = leftIndex;
+                var newLeftIndex = leftIndex - 1;
+
+                var newLeftValue = numbers[newLeftIndex];
+                var newRightValue = numbers[newRightIndex];
+                if (newRightValue > newLeftValue)
+                {
+                    rightList.Add(newRightValue);
+
+                    var valueForSwapFromRight = rightList.Where(x => x > newLeftValue).Min();
+                    //var rightIndexForSwap = numbers.FindIndex(x => x == valueForSwapFromRight);
+
+                    rightList.Remove(valueForSwapFromRight);
+                    rightList.Add(newLeftValue);
+
+                    resultList.Add(valueForSwapFromRight);
+                    resultList.AddRange(rightList.OrderBy(x => x).ToList());
+                    numbers = new List<int>(resultList);
+                }
+            }
         }
+
+        private static List<int> rightList = new List<int>();
+        private static List<int> resultList = new List<int>();
 
         private static bool CheckIfAlreadyLargestNumber(int input, int number)
         {
             return number == input;
         }
 
-        private static bool CheckIfOnlyOneNumber(List<char> numbers)
+        private static bool CheckIfOnlyOneNumber(List<int> numbers)
         {
             return numbers.Distinct().Count() == 1;
         }

@@ -73,7 +73,7 @@ namespace NextLargerNumber
             var numbers = input.ToString().ToCharArray().ToList();
 
             var largestNumbers = numbers.OrderByDescending(x => x)
-                .Select(x => (int)char.GetNumericValue(x)).ToList();
+                .Select(x => (int) char.GetNumericValue(x));
 
             var largetNumber = GetNumbericFromValueList(largestNumbers);
             if (CheckIfOnlyOneNumber(numbers) || CheckIfAlreadyLargestNumber(input, largetNumber))
@@ -81,7 +81,24 @@ namespace NextLargerNumber
                 return -1;
             }
 
-            return largetNumber;
+            var rightIndex = numbers.Count - 1;
+            var leftIndex = rightIndex - 1;
+                        
+            SwapWhenRightLargerThanLeftElement(numbers, rightIndex, leftIndex);
+
+            var result = GetNumbericFromValueList(numbers.Select(x => (int)char.GetNumericValue(x)));
+
+            return result;
+        }
+
+        private static void SwapWhenRightLargerThanLeftElement(List<char> numbers, int rightIndex, int leftIndex)
+        {
+            if (numbers[rightIndex] > numbers[leftIndex])
+            {
+                var temp = numbers[rightIndex];
+                numbers[rightIndex] = numbers[leftIndex];
+                numbers[leftIndex] = temp;
+            }
         }
 
         private static bool CheckIfAlreadyLargestNumber(int input, int number)
@@ -94,11 +111,11 @@ namespace NextLargerNumber
             return numbers.Distinct().Count() == 1;
         }
 
-        private static int GetNumbericFromValueList(List<int> numbers)
+        private static int GetNumbericFromValueList(IEnumerable<int> numbers)
         {
-            var count = numbers.Count;
+            var count = numbers.Count();
 
-            var result = numbers.Select((x, index) => { return x * (Math.Pow(10, (count - index - 1))); }).Sum();
+            var result = numbers.Select((x, index) => x * (Math.Pow(10, (count - index - 1)))).Sum();
             return Convert.ToInt32(result);
         }
     }

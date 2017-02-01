@@ -108,32 +108,23 @@ namespace NextLargerNumber
 
             var numbers = input.ToString().ToCharArray().Select(x => (int)char.GetNumericValue(x)).ToList();
 
-            //for more easily refactoring
-            int result = 0;
+            var rightIndex = numbers.Count - 1;
 
-            var largestNumbers = numbers.OrderByDescending(x => x);
+            SwapWhenRightLargerThanLeftElement(numbers, rightIndex, rightIndex - 1);
 
-            var largetNumber = GetNumbericFromValueList(largestNumbers);
-            if (CheckIfOnlyOneNumber(numbers) || CheckIfAlreadyLargestNumber(input, largetNumber))
-            {
-                result = -1;
-            }
-            else
-            {
-                var rightIndex = numbers.Count - 1;
-                var leftIndex = rightIndex - 1;
-
-                SwapWhenRightLargerThanLeftElement(numbers, rightIndex, leftIndex);
-
-                result = GetNumbericFromValueList(resultList);
-            }
-
-            return result;
+            var result = GetNumbericFromValueList(resultList);
+            return result == input ? -1 : result;
         }
 
         private static void SwapWhenRightLargerThanLeftElement(List<int> numbers, int rightIndex, int leftIndex)
         {
             rightList.Add(numbers[rightIndex]);
+
+            if (leftIndex < 0)
+            {
+                resultList.AddRange(rightList.OrderByDescending(x => x));
+                return;
+            }
 
             if (numbers[rightIndex] > numbers[leftIndex])
             {
@@ -146,11 +137,11 @@ namespace NextLargerNumber
 
                 resultList.Add(valueForSwapFromRight);
                 resultList.AddRange(rightList.OrderBy(x => x).ToList());
+
+                return;
             }
-            else
-            {
-                SwapWhenRightLargerThanLeftElement(numbers, leftIndex, leftIndex - 1);
-            }
+
+            SwapWhenRightLargerThanLeftElement(numbers, leftIndex, leftIndex - 1);
         }
 
         private static List<int> rightList = new List<int>();

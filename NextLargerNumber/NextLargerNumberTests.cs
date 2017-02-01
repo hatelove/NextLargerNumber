@@ -79,6 +79,16 @@ namespace NextLargerNumber
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod]
+        public void Test_10231_should_return_10312()
+        {
+            var input = 10231;
+            var expected = 10312;
+
+            var actual = NextLargerNumber.Next(input);
+            Assert.AreEqual(expected, actual);
+        }
+
         [Ignore]
         [TestMethod]
         public void Test_2543_should_return_3245()
@@ -130,7 +140,7 @@ namespace NextLargerNumber
                 numbers[rightIndex] = numbers[leftIndex];
                 numbers[leftIndex] = temp;
 
-                resultList = numbers;                
+                resultList = numbers;
             }
             else
             {
@@ -141,15 +151,17 @@ namespace NextLargerNumber
 
                 if (numbers[newRightIndex] > numbers[newLeftIndex])
                 {
+                    var leftList = numbers.GetRange(0, newLeftIndex);
+                    resultList.AddRange(leftList);
                     rightList.Add(numbers[newRightIndex]);
 
-                    var valueForSwapFromRight = rightList.Where(x => x > numbers[newLeftIndex]).Min();                    
+                    var valueForSwapFromRight = rightList.Where(x => x > numbers[newLeftIndex]).Min();
 
                     rightList.Remove(valueForSwapFromRight);
                     rightList.Add(numbers[newLeftIndex]);
 
                     resultList.Add(valueForSwapFromRight);
-                    resultList.AddRange(rightList.OrderBy(x => x).ToList());                    
+                    resultList.AddRange(rightList.OrderBy(x => x).ToList());
                 }
             }
         }

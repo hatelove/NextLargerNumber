@@ -150,16 +150,9 @@ namespace NextLargerNumber
 
             for (int index = inputNumbers.Count - 1; index > 0; index--)
             {
-                var rightIndex = index;
-                var leftIndex = rightIndex - 1;
-
-                if (inputNumbers[rightIndex] <= inputNumbers[leftIndex])
+                if (inputNumbers[index] > inputNumbers[index - 1])
                 {
-                    continue;
-                }
-                else
-                {
-                    var result = SwappedList(inputNumbers, leftIndex, rightIndex);
+                    var result = SwappedList(inputNumbers, index - 1, index);
                     return GetNumbericFromValueList(result);
                 }
             }

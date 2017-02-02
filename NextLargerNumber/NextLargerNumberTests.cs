@@ -163,7 +163,7 @@ namespace NextLargerNumber
         private static List<int> SwappedList(List<int> inputNumbers, int leftIndex, int index)
         {
             var leftLength = leftIndex + 1;
-            var leftLit = inputNumbers.GetRange(0, leftLength);
+            var leftList = inputNumbers.GetRange(0, leftLength);
 
             var rightLength = inputNumbers.Count - leftLength;
             var rightList = inputNumbers.GetRange(index, rightLength);
@@ -174,14 +174,14 @@ namespace NextLargerNumber
             {
                 if (rightList[i] > leftForSwap)
                 {
-                    leftLit[leftIndex] = rightList[i];
+                    leftList[leftIndex] = rightList[i];
                     rightList[i] = leftForSwap;
                     break;
                 }
             }
 
-            leftLit.AddRange(rightList.OrderBy(x => x));
-            return leftLit;
+            leftList.AddRange(rightList.OrderBy(x => x));
+            return leftList;
         }
 
         private static int GetNumbericFromValueList(IEnumerable<int> numbers)

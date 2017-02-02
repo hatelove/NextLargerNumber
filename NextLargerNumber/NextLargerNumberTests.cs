@@ -146,14 +146,49 @@ namespace NextLargerNumber
     {
         internal int Next(int input)
         {
-            var numbers = input.ToString().ToCharArray().Select(x => (int)char.GetNumericValue(x)).ToList();
+            var inputNumbers = input.ToString().ToCharArray().Select(x => (int)char.GetNumericValue(x)).ToList();
 
-            var rightIndex = numbers.Count - 1;
+            for (int index = inputNumbers.Count - 1; index > 0; index--)
+            {
+                var rightIndex = index;
+                var leftIndex = rightIndex - 1;
 
-            SwapWhenRightLargerThanLeftElement(numbers, rightIndex, rightIndex - 1);
+                if (inputNumbers[rightIndex] <= inputNumbers[leftIndex])
+                {
+                    continue;
+                }
+                else
+                {
+                    var result = SwappedList(inputNumbers, leftIndex, rightIndex);
+                    return GetNumbericFromValueList(result);
+                }
+            }
 
-            var result = GetNumbericFromValueList(resultList);
-            return result == input ? -1 : result;
+            return -1;
+        }
+
+        private static List<int> SwappedList(List<int> inputNumbers, int leftIndex, int index)
+        {
+            var leftLength = leftIndex + 1;
+            var leftLit = inputNumbers.GetRange(0, leftLength);
+
+            var rightLength = inputNumbers.Count - leftLength;
+            var rightList = inputNumbers.GetRange(index, rightLength);
+
+            var leftForSwap = inputNumbers[leftIndex];
+
+            for (int i = rightList.Count - 1; i >= 0; i--)
+            {
+                if (rightList[i] > leftForSwap)
+                {
+                    leftLit[leftIndex] = rightList[i];
+                    rightList[i] = leftForSwap;
+                    break;
+                }
+            }
+
+            leftLit.AddRange(rightList.OrderBy(x => x));
+            return leftLit;
         }
 
         private void SwapWhenRightLargerThanLeftElement(List<int> numbers, int rightIndex, int leftIndex)

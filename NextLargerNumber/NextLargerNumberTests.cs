@@ -17,7 +17,7 @@ namespace NextLargerNumber
 
             var expected = NoLargerNumber;
 
-            int actual = CreateNextLargerNumber().Next(input);
+            int actual = GetNextLargerNumber(input);
 
             Assert.AreEqual(expected, actual);
         }
@@ -27,7 +27,7 @@ namespace NextLargerNumber
         {
             var input = 23;
             var expected = 32;
-            var actual = CreateNextLargerNumber().Next(input);
+            var actual = GetNextLargerNumber(input);
 
             Assert.AreEqual(expected, actual);
         }
@@ -38,7 +38,7 @@ namespace NextLargerNumber
             var input = 32;
             var expected = NoLargerNumber;
 
-            var actual = CreateNextLargerNumber().Next(input);
+            var actual = GetNextLargerNumber(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -47,7 +47,7 @@ namespace NextLargerNumber
         {
             var input = 666;
             var expected = NoLargerNumber;
-            var actual = CreateNextLargerNumber().Next(input);
+            var actual = GetNextLargerNumber(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -57,7 +57,7 @@ namespace NextLargerNumber
             var input = 517;
             var expected = 571;
 
-            var actual = CreateNextLargerNumber().Next(input);
+            var actual = GetNextLargerNumber(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -67,7 +67,7 @@ namespace NextLargerNumber
             var input = 132;
             var expected = 213;
 
-            var actual = CreateNextLargerNumber().Next(input);
+            var actual = GetNextLargerNumber(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -77,7 +77,7 @@ namespace NextLargerNumber
             var input = 231;
             var expected = 312;
 
-            var actual = CreateNextLargerNumber().Next(input);
+            var actual = GetNextLargerNumber(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -87,7 +87,7 @@ namespace NextLargerNumber
             var input = 10231;
             var expected = 10312;
 
-            var actual = CreateNextLargerNumber().Next(input);
+            var actual = GetNextLargerNumber(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -96,7 +96,7 @@ namespace NextLargerNumber
         {
             var input = 2543;
             var expected = 3245;
-            var actual = CreateNextLargerNumber().Next(input);
+            var actual = GetNextLargerNumber(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -105,7 +105,7 @@ namespace NextLargerNumber
         {
             var input = 54321;
             var expected = NoLargerNumber;
-            var actual = CreateNextLargerNumber().Next(input);
+            var actual = GetNextLargerNumber(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -114,7 +114,7 @@ namespace NextLargerNumber
         {
             var input = 12321;
             var expected = 13122;
-            var actual = CreateNextLargerNumber().Next(input);
+            var actual = GetNextLargerNumber(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -123,7 +123,7 @@ namespace NextLargerNumber
         {
             var input = 11200;
             var expected = 12001;
-            var actual = CreateNextLargerNumber().Next(input);
+            var actual = GetNextLargerNumber(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -132,13 +132,13 @@ namespace NextLargerNumber
         {
             var input = 15963;
             var expected = 16359;
-            var actual = CreateNextLargerNumber().Next(input);
+            var actual = GetNextLargerNumber(input);
             Assert.AreEqual(expected, actual);
         }
 
-        private static NextLargerNumber CreateNextLargerNumber()
+        private static int GetNextLargerNumber(int input)
         {
-            return new NextLargerNumber();
+            return new NextLargerNumber().Next(input);
         }
     }
 

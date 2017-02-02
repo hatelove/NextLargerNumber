@@ -8,12 +8,14 @@ namespace NextLargerNumber
     [TestClass]
     public class NextLargerNumberTests
     {
+        private const int NoLargerNumber = -1;
+
         [TestMethod]
-        public void Test_1_should_be_minus_1()
+        public void Test_1_should_be_largestNumber()
         {
             var input = 1;
 
-            var expected = -1;
+            var expected = NoLargerNumber;
 
             int actual = CreateNextLargerNumber().Next(input);
 
@@ -31,20 +33,20 @@ namespace NextLargerNumber
         }
 
         [TestMethod]
-        public void Test_32_should_return_minus_1()
+        public void Test_32_should_be_largestNumber()
         {
             var input = 32;
-            var expected = -1;
+            var expected = NoLargerNumber;
 
             var actual = CreateNextLargerNumber().Next(input);
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        public void Test_666_should_return_minus_1()
+        public void Test_666_should_be_largestNumber()
         {
             var input = 666;
-            var expected = -1;
+            var expected = NoLargerNumber;
             var actual = CreateNextLargerNumber().Next(input);
             Assert.AreEqual(expected, actual);
         }
@@ -99,10 +101,10 @@ namespace NextLargerNumber
         }
 
         [TestMethod]
-        public void Test_54321_should_return_minus_1()
+        public void Test_54321_should_be_largestNumber()
         {
             var input = 54321;
-            var expected = -1;
+            var expected = NoLargerNumber;
             var actual = CreateNextLargerNumber().Next(input);
             Assert.AreEqual(expected, actual);
         }

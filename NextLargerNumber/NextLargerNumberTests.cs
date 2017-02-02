@@ -113,7 +113,7 @@ namespace NextLargerNumber
             var input = 12321;
             var expected = 13122;
             var actual = CreateNextLargerNumber().Next(input);
-            Assert.AreEqual(expected, actual);            
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -124,6 +124,16 @@ namespace NextLargerNumber
             var actual = CreateNextLargerNumber().Next(input);
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void Test_15963_should_return_16359()
+        {
+            var input = 15963;
+            var expected = 16359;
+            var actual = CreateNextLargerNumber().Next(input);
+            Assert.AreEqual(expected, actual);
+        }
+
         private static NextLargerNumber CreateNextLargerNumber()
         {
             return new NextLargerNumber();

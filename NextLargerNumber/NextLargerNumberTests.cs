@@ -138,13 +138,13 @@ namespace NextLargerNumber
 
         private static int GetNextLargerNumber(int input)
         {
-            return new NextLargerNumber().Next(input);
+            return NextLargerNumber.Next(input);
         }
     }
 
     public class NextLargerNumber
     {
-        internal int Next(int input)
+        internal static int Next(int input)
         {
             var inputNumbers = input.ToString().ToCharArray().Select(x => (int)char.GetNumericValue(x)).ToList();
 
@@ -189,47 +189,6 @@ namespace NextLargerNumber
 
             leftLit.AddRange(rightList.OrderBy(x => x));
             return leftLit;
-        }
-
-        private void SwapWhenRightLargerThanLeftElement(List<int> numbers, int rightIndex, int leftIndex)
-        {
-            rightList.Add(numbers[rightIndex]);
-
-            if (leftIndex < 0)
-            {
-                resultList.AddRange(rightList.OrderByDescending(x => x));
-                return;
-            }
-
-            if (numbers[rightIndex] > numbers[leftIndex])
-            {
-                resultList.AddRange(numbers.GetRange(0, leftIndex));
-
-                var valueForSwapFromRight = rightList.Where(x => x > numbers[leftIndex]).Min();
-
-                rightList.Remove(valueForSwapFromRight);
-                rightList.Add(numbers[leftIndex]);
-
-                resultList.Add(valueForSwapFromRight);
-                resultList.AddRange(rightList.OrderBy(x => x).ToList());
-
-                return;
-            }
-
-            SwapWhenRightLargerThanLeftElement(numbers, leftIndex, leftIndex - 1);
-        }
-
-        private List<int> rightList = new List<int>();
-        private List<int> resultList = new List<int>();
-
-        private static bool CheckIfAlreadyLargestNumber(int input, int number)
-        {
-            return number == input;
-        }
-
-        private static bool CheckIfOnlyOneNumber(List<int> numbers)
-        {
-            return numbers.Distinct().Count() == 1;
         }
 
         private static int GetNumbericFromValueList(IEnumerable<int> numbers)
